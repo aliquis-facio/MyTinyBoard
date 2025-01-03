@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Key Logger</title>
+    <meta content="text/html; charset=utf-8">
+    <link rel="stylesheet" href="./style/main.css">
+</head>
+
+<body>
+    <script>
+        function keylogger() {
+            let text = document.getElementById('test').value;
+            document.getElementById("result").innerText = text;
+        }
+    </script>
+
+    <input id = "test" type="text" onkeyup="keylogger()" placeholder="test">
+    <div id = "result"></div>
+</body>
+
+</html>

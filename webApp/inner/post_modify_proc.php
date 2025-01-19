@@ -17,7 +17,7 @@
 
     if (empty($title) or empty($content)) {
         echo "<script>alert('제목과 내용을 다 채우고 등록 버튼을 눌러주시기 바랍니다')</script>";
-        echo "<script>location.replace('../outer/post_modify.php?board_id={$board_id}');</script>";
+        echo "<script>location.replace('../post_modify.php?board_id={$board_id}');</script>";
         exit;
     } else {
         $update_sql = "UPDATE board SET title = '{$title}', content = '{$content}', write_date = '{$modified_date -> format('Y-m-d')}' WHERE board_id = '{$board_id}'";
@@ -25,10 +25,10 @@
 
         if ($result) {
             echo "<script>alert('수정되었습니다');</script>";
-            echo "<script>location.replace('../outer/new_home.php');</script>";
+            echo "<script>location.replace('../index.php');</script>";
         } else {
             echo "<script>alert('오류가 발생했습니다');</script>";
-            echo "<script>location.replace('../outer/post_modify.php');</script>";
+            echo "<script>location.replace('../post_modify.php');</script>";
         }
     }
 

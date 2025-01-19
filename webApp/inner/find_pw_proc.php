@@ -1,7 +1,6 @@
 <?php
 include("./user_session.php");
 include("./sql_connect.php");
-// include("./get_id.php");
 
 function get_id($conn, $id, $name, $type, $var) {
     $select_sql = "SELECT id, name, {$type}, pw FROM member WHERE id = '{$id}' AND name = '{$name}' AND {$type} = '{$var}'";
@@ -9,10 +8,10 @@ function get_id($conn, $id, $name, $type, $var) {
 
     if (isset($result['pw'])) {
         echo "<script>alert('당신의 비밀번호는 {$result['pw']}입니다.')</script>";
-        echo "<script>location.replace('../outer/new_home.php');</script>";
+        echo "<script>location.replace('../index.php');</script>";
     } else {
         echo "<script>alert('아이디 혹은 이름, {$type}을 잘못 입력하셨습니다')</script>";
-        echo "<script>location.replace('../outer/find_pw.php');</script>";
+        echo "<script>location.replace('../find_pw.php');</script>";
         exit;
     }
 }

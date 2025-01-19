@@ -4,14 +4,14 @@
 <head>
     <title>VIEW</title>
     <meta content="text/html; charset=utf-8">
-    <link rel="stylesheet" href="../style/main.css">
-    <link rel="stylesheet" href="../style/board_view.css">
-    <script src="../script/view.js"></script>
+    <link rel="stylesheet" href="./style/main.css">
+    <link rel="stylesheet" href="./style/board_view.css">
+    <script src="./script/view.js"></script>
 </head>
 
 <?php
-    include("../inner/user_session.php");
-    include("../inner/sql_connect.php");
+    include("./inner/user_session.php");
+    include("./inner/sql_connect.php");
 
     $user_id = $_SESSION['user_id'];
     $board_id = $_GET['board_id'];
@@ -38,7 +38,7 @@
 
 <body>
     <div class = "logo">
-        <a class = "title" href="./new_home.php">안녕하진않아요</a>
+        <a class = "title" href="./index.php">뭐 어때</a>
     </div>
 
     <div class="container">
@@ -57,11 +57,11 @@
                 <?php echo $row['content'];?>
             </div>
             <?php
-                if ($writer != $user_id) echo "<a id=\"writer_link\" class='left' href=\"./sb_post_list.php?writer={$row['writer']}\">{$row['writer']}님의 게시글 더보기</a>";
+                if ($writer != $user_id) echo "<a id=\"writer_link\" class='left' href=\"./post_list.php?writer={$row['writer']}\">{$row['writer']}님의 게시글 더보기</a>";
                 else {
                     echo "<span class='right'>";
                     echo "<a class = 'orange' href='./post_modify.php?board_id={$board_id}'>수정하기</a>";
-                    echo "<a class = 'red' href = '../inner/delete_post.php?board_id={$board_id}'\">삭제하기</button>";
+                    echo "<a class = 'red' href = './inner/post_delete.php?board_id={$board_id}'\">삭제하기</button>";
                     echo "</span>";
                 }
             ?>
@@ -103,7 +103,7 @@
                     <?php echo "{$user_id}님";?>
                 </span>
                 <span>
-                    <form action="../inner/coment_write.php" method="post">
+                    <form action="./inner/coment_write.php" method="post">
                         <input type="text" name="reply" placeholder="댓글을 남겨보세요">
                         <?php
                             echo "<input type='hidden' name='post_id' value={$row['board_id']}>";

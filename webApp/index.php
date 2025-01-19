@@ -4,39 +4,38 @@
 <head>
     <title>HOME</title>
     <meta content="text/html; charset=utf-8">
-    <link rel="stylesheet" href="../style/main.css">
-    <link rel="stylesheet" href="../style/list.css">
+    <link rel="stylesheet" href="./style/main.css">
+    <link rel="stylesheet" href="./style/list.css">
     <script></script>
 </head>
 
 <?php
-    include_once("../inner/user_session.php");
+    include_once("./inner/user_session.php");
 ?>
 
 <body>
     <div class = "">
         <nav>
-            <a class="title" href="./new_home.php">안녕하진않아요</a>
-            <!-- <a href="./score_board.php">점수판</a> -->
+            <a class="title" href="./index.php">뭐 어때</a>
         </nav>
         <span>
             <?php echo "{$user_id}님";?>
         </span>
-        <?php echo "<a href=\"./sb_post_list.php?writer={$user_id}\">내 게시글</a>";?>
-        <button type="button" class="red" onclick="location.href = '../inner/logout.php'">LOG OUT</button>
+        <?php echo "<a href=\"./post_list.php?writer={$user_id}\">내 게시글</a>";?>
+        <button type="button" class="red" onclick="location.href = './inner/logout.php'">LOG OUT</button>
     </div>
     
     <div class = "headBox">
         <h1>자유게시판</h1>
         <?php
-            include_once("../inner/sql_connect.php");
+            include_once("./inner/sql_connect.php");
 
             $select_sql = "SELECT board_id FROM board";
             $result = mysqli_query($conn, $select_sql);
             $cnt = mysqli_num_rows($result);
             echo "<h4> {$cnt}개의 글</h4>"
         ?>
-        <a href="./write.php">글쓰기</a>
+        <a href="./post_write.php">글쓰기</a>
     </div>
 
     <hr>
@@ -79,10 +78,10 @@
                         echo "<tr>";
                         echo "<td>{$num}</td>";
                         echo "<td>";
-                        echo "<a href=\"./view.php?board_id={$row['board_id']}\">{$row['title']}</a>";
+                        echo "<a href=\"./post_view.php?board_id={$row['board_id']}\">{$row['title']}</a>";
                         echo "</td>";
                         echo "<td>";
-                        echo "<a href=\"./sb_post_list.php?writer={$row['writer']}\">{$row['writer']}</a>";
+                        echo "<a href=\"./post_list.php?writer={$row['writer']}\">{$row['writer']}</a>";
                         echo "</td>";
                         echo "<td>{$write_date}</td>";
                         echo "<td>{$row['view']}</td>";

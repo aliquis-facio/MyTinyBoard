@@ -16,10 +16,10 @@
 
     if ($ret) {
         echo "<script>alert('삭제되었습니다');</script>";
-        echo "<script>location.replace('../outer/new_home.php');</script>";
+        echo "<script>location.replace('../index.php');</script>";
     } else {
         echo "<script>alert('오류가 발생했습니다');</script>";
-        echo "<script>location.replace('../outer/view.php?board_id={$board_id}');</script>";
+        echo "<script>location.replace('../post_view.php?board_id={$board_id}');</script>";
     }
 
     mysqli_close($conn);

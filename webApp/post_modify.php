@@ -4,14 +4,14 @@
 <head>
     <title>MODIFY</title>
     <meta content="text/html; charset=utf-8">
-    <link rel="stylesheet" href="../style/main.css">
-    <link rel="stylesheet" href="../style/write.css">
+    <link rel="stylesheet" href="./style/main.css">
+    <link rel="stylesheet" href="./style/write.css">
     <script></script>
 </head>
 
 <?php
-    include("../inner/user_session.php");
-    include("../inner/sql_connect.php");
+    include("./inner/user_session.php");
+    include("./inner/sql_connect.php");
 
     $user_id = $_SESSION['user_id'];
     $board_id = $_GET['board_id'];
@@ -32,7 +32,7 @@
 
 <body>
     <div class = "logo">
-        <a class = "title" href="./new_home.php">안녕하진않아요</a>
+        <a class = "title" href="./index.php">뭐 어때</a>
     </div>
 
     <div>
@@ -42,7 +42,7 @@
     </div>
 
     <div>
-        <form action="../inner/modify_post_proc.php" method="post" id = "post_modify">
+        <form action="./inner/post_modify_proc.php" method="post" id = "post_modify">
             <?php
                 echo "<input id = 'board_write' class='post_title' type='text' name = 'title' value = '{$title}'>";
                 echo "<textarea class='post_content' name='content'>{$content}</textarea>";
@@ -52,7 +52,7 @@
     </div>
 
     <div>
-        <a href="./new_home.php">뒤로 가기</a>
+        <a href="./index.php">뒤로 가기</a>
     </div>
 </body>
 

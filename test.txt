@@ -1,3 +1,0 @@
-['Udo']
-['Marc', 'Dan']
-['Lian', 'Jet', 'Jan', 'Joe']

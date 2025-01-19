@@ -4,18 +4,18 @@
 <head>
     <title>WRITE</title>
     <meta content="text/html; charset=utf-8">
-    <link rel="stylesheet" href="../style/main.css">
-    <link rel="stylesheet" href="../style/write.css">
+    <link rel="stylesheet" href="./style/main.css">
+    <link rel="stylesheet" href="./style/write.css">
     <script></script>
 </head>
 
 <?php
-    include("../inner/user_session.php");
+    include("./inner/user_session");
 ?>
 
 <body>
     <div class = "logo">
-        <a class = "title" href="./new_home.php">안녕하진않아요</a>
+        <a class = "title" href="./index">뭐 어때</a>
     </div>
 
     <div class="container">
@@ -26,14 +26,14 @@
     <hr>
 
     <div>
-        <form id = "post_write" action="../inner/post_write_proc.php" method = "POST">
+        <form id = "post_write" action="./inner/post_write_proc.php" method = "POST">
             <input class="post_title" name = "title" type="text" placeholder = "제목을 입력해주세요">
             <textarea class="post_content" name = "substance">내용을 입력해주세요</textarea>
         </form>
     </div>
 
     <div>
-        <a href="./new_home.php">뒤로 가기</a>
+        <a href="./index.php">뒤로 가기</a>
     </div>
 </body>
 

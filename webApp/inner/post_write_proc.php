@@ -17,7 +17,7 @@
 
     if (empty($title) or empty($substance)) {
         echo "<script>alert('제목과 내용을 다 채우고 등록 버튼을 눌러주시기 바랍니다')</script>";
-        echo "<script>location.replace('../outer/write.php');</script>";
+        echo "<script>location.replace('../post_write.php');</script>";
         exit;
     } else {
         $insert_sql = "INSERT INTO board VALUES ('$board_id', '{$user}', '{$title}', '{$substance}', '{$created_date -> format('Y-m-d H:i:s')}', 0)";
@@ -25,10 +25,10 @@
 
         if ($result) {
             echo "<script>alert('등록되었습니다');</script>";
-            echo "<script>location.replace('../outer/new_home.php');</script>";
+            echo "<script>location.replace('../index.php');</script>";
         } else {
             echo "<script>alert('오류가 발생했습니다');</script>";
-            echo "<script>location.replace('../outer/write.php');</script>";
+            echo "<script>location.replace('../post_write.php');</script>";
         }
     }
 

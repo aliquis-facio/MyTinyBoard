@@ -7,5 +7,5 @@
 
 <script>
     alert("You've been logged out");
-    location.replace('../outer/new_home.php');
+    location.replace('../index.php');
 </script>

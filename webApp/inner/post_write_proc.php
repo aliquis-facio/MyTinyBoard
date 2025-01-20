@@ -8,29 +8,34 @@
         session_start();
     }
 
-    $user = $_SESSION['user_id'];
+    // get parameters
+    $writer = $_SESSION['user_id'];
     date_default_timezone_set('Asia/Seoul');
     $created_date = new DateTime("now");
+    $created_date = $created_date->format('Y-m-d H:i:s');
     $title = $_POST["title"];
-    $board_id = hash('sha256', $title);
+    $post_id = hash('sha256', $title);
     $substance = $_POST["substance"];
+    $post_view = 0;
 
-    if (empty($title) or empty($substance)) {
-        echo "<script>alert('제목과 내용을 다 채우고 등록 버튼을 눌러주시기 바랍니다')</script>";
-        echo "<script>location.replace('../post_write.php');</script>";
-        exit;
+    // insert sql
+    $insert_sql = "INSERT INTO board VALUES (?, ?, ?, ?, ?, ?)";
+    $stmt = $conn->prepare($insert_sql);
+    $stmt->bind_param('sssssi', $post_id, $writer, $title, $substance, $created_date, $post_view);
+    $stmt->execute();
+    $cnt = $stmt->num_rows();
+    echo $cnt;
+
+    if ($cnt) {
+        echo "<script>alert('등록되었습니다');</script>";
+        // echo "<script>location.replace('../index.php');</script>";
     } else {
-        $insert_sql = "INSERT INTO board VALUES ('$board_id', '{$user}', '{$title}', '{$substance}', '{$created_date -> format('Y-m-d H:i:s')}', 0)";
-        $result = mysqli_query($conn, $insert_sql);
-
-        if ($result) {
-            echo "<script>alert('등록되었습니다');</script>";
-            echo "<script>location.replace('../index.php');</script>";
-        } else {
-            echo "<script>alert('오류가 발생했습니다');</script>";
-            echo "<script>location.replace('../post_write.php');</script>";
-        }
+        echo "<script>
+        alert('오류가 발생했습니다');
+        // history.back();
+        </script>";
+        // echo "<script>location.replace('../post_write.php');</script>";
     }
 
-    mysqli_close($conn);
+    $stmt->close();
 ?>

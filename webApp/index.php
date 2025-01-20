@@ -69,7 +69,7 @@
                 <?php
                     $num = 1;
                     $stmt->reset();
-                    $select_sql = "SELECT * FROM `board` ORDER BY `board`.`write_date` DESC";
+                    $select_sql = "SELECT * FROM 'board' ORDER BY 'board'.'write_date' DESC";
                     $stmt = $conn->prepare($select_sql);
                     $stmt->execute();
                     $ret = $stmt->get_result();

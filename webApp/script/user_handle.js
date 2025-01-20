@@ -13,7 +13,6 @@ function sign_in_submit() {
 
     if (check) {
 		form.submit();
-		console.log(1);
 	}
 }
 

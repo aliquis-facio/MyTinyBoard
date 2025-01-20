@@ -6,7 +6,7 @@
     <meta content="text/html; charset=utf-8">
     <link rel="stylesheet" href="./style/main.css">
     <link rel="stylesheet" href="./style/write.css">
-    <script></script>
+    <script src="./script/board_handle.js"></script>
 </head>
 
 <?php
@@ -20,15 +20,15 @@
 
     <div class="container">
         <h1>글쓰기</h1>
-        <button class = "small orange" form = "post_write" type = "submit">등록</button>
+        <button class="small orange" form="post_write" type="submit" onclick="post_write_submit()">등록</button>
     </div>
 
     <hr>
 
     <div>
-        <form id = "post_write" action="./inner/post_write_proc.php" method = "POST">
-            <input class="post_title" name = "title" type="text" placeholder = "제목을 입력해주세요">
-            <textarea class="post_content" name = "substance">내용을 입력해주세요</textarea>
+        <form id="post_write_form" action="./inner/post_write_proc.php" method="POST">
+            <input class="post_title" name = "title" type="text" placeholder="제목을 입력해주세요">
+            <textarea class="post_content" name="substance" placeholder="내용을 입력해주세요"></textarea>
         </form>
     </div>
 

@@ -1,3 +1,22 @@
+function sign_in_submit() {
+	let form = document.getElementById("sign_in_form");
+    let inputs = document.getElementsByTagName("input");
+    let check = true;
+
+    for (let i = 0; i < inputs.length; i++) {
+        if (inputs[i].value == "") {
+            alert("You can't leave this empty");
+            check = false;
+            break;
+        }
+    }
+
+    if (check) {
+		form.submit();
+		console.log(1);
+	}
+}
+
 function sign_up_submit() {
     let form = document.getElementById("sign_up_form");
     let inputs = document.getElementsByTagName("input");

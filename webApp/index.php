@@ -11,6 +11,7 @@
 
 <?php
     include_once("./inner/user_session.php");
+    include_once("./inner/sql_connect.php");
 ?>
 
 <body>
@@ -18,21 +19,20 @@
         <nav>
             <a class="title" href="./index.php">뭐 어때</a>
         </nav>
-        <span>
-            <?php echo "{$user_id}님";?>
-        </span>
-        <?php echo "<a href=\"./post_list.php?writer={$user_id}\">내 게시글</a>";?>
+        <?php
+            echo "<span>{$user_id}님</span>
+            <a href=\"./post_list.php?writer={$user_id}\">내 게시글</a>";
+        ?>
         <button type="button" class="red" onclick="location.href = './inner/logout.php'">LOG OUT</button>
     </div>
     
     <div class = "headBox">
         <h1>자유게시판</h1>
         <?php
-            include_once("./inner/sql_connect.php");
-
-            $select_sql = "SELECT board_id FROM board";
-            $result = mysqli_query($conn, $select_sql);
-            $cnt = mysqli_num_rows($result);
+            $select_sql = "SELECT * FROM board";
+            $stmt = $conn->prepare($select_sql);
+            $stmt->execute();
+            $cnt = $stmt -> num_rows();
             echo "<h4> {$cnt}개의 글</h4>"
         ?>
         <a href="./post_write.php">글쓰기</a>
@@ -65,37 +65,36 @@
                     </td>
                 </tr>
             </tfoot>
-            <?php
-                $num = 1;
-                $select_sql = "SELECT * FROM `board` ORDER BY `board`.`write_date` DESC";
-                $result = mysqli_query($conn, $select_sql);
+            <tbody>
+                <?php
+                    $num = 1;
+                    $stmt->reset();
+                    $select_sql = "SELECT * FROM `board` ORDER BY `board`.`write_date` DESC";
+                    $stmt = $conn->prepare($select_sql);
+                    $stmt->execute();
+                    $ret = $stmt->get_result();
 
-                if ($result) {
-                    echo "<tbody>";
-                    while($row = mysqli_fetch_array($result)) {
-                        $write_date = str_replace("-", ".", substr($row['write_date'], 0, 16));
+                    if ($ret) {
+                        while($row = $ret->fetch_assoc()) {
+                            $write_date = str_replace("-", ".", substr($row['write_date'], 0, 16));
 
-                        echo "<tr>";
-                        echo "<td>{$num}</td>";
-                        echo "<td>";
-                        echo "<a href=\"./post_view.php?board_id={$row['board_id']}\">{$row['title']}</a>";
-                        echo "</td>";
-                        echo "<td>";
-                        echo "<a href=\"./post_list.php?writer={$row['writer']}\">{$row['writer']}</a>";
-                        echo "</td>";
-                        echo "<td>{$write_date}</td>";
-                        echo "<td>{$row['view']}</td>";
-                        echo "</tr>";
-                        $num += 1;
+                            echo "<tr>
+                            <td>{$num}</td>
+                            <td><a href=\"./post_view.php?board_id={$row['board_id']}\">{$row['title']}</a></td>
+                            <td><a href=\"./post_list.php?writer={$row['writer']}\">{$row['writer']}</a></td>
+                            <td>{$write_date}</td>
+                            <td>{$row['view']}</td>
+                            </tr>";
+                            $num += 1;
+                        }
+                    } else {
+                        echo "오류 발생했다.<br>";
                     }
-                    echo "</table>";
-                } else {
-                    echo "오류 발생했다.<br>";
-                }
 
-                mysqli_close($conn);
-            ?>
-        </div>
+                    $stmt->close();
+                ?>
+            </tbody>
+        </table>
     </div>
 </body>
 

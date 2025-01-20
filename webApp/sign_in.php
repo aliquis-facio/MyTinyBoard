@@ -5,7 +5,7 @@
     <meta content="charset=utf-8">
     <link rel="stylesheet" href="./style/main.css">
     <link rel="stylesheet" href="./style/sign_in.css">
-    <script></script>
+    <script src="./script/user_handle.js"></script>
 </head>
 
 <body>
@@ -14,10 +14,10 @@
     </div>
 
     <div class = "bodyBox cyan">
-        <form action="./inner/signin_proc.php" method="POST">
+        <form id="sign_in_form" action="./inner/signin_proc.php" method="POST">
             <input class = "long" name = "id" type="text" placeholder = "아이디">
             <input class = "long" name = "pw" type="password" placeholder="비밀번호">
-            <button class = "long blue" type="submit">LOG IN</button>
+            <button class = "long blue" type="button" onclick="sign_in_submit()">LOG IN</button>
         </form>
     </div>
 

@@ -1,3 +1,64 @@
+.container {
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+    grid-template-rows: 1fr 9fr;
+    grid-template-areas: 
+    "a a a a a"
+    "b c c c ."
+    "b c c c ."
+    "b c c c ."
+    "b c c c ."
+    "b c c c ."
+    "b c c c ."
+    "b c c c ."
+    "b c c c ."
+    "b c c c .";
+}
+
+.head_box {
+    grid-area: a;
+}
+
+.side_box {
+    grid-area: b;
+    text-align: left;
+}
+
+.body_box {
+    grid-area: c;
+    width: 100%;
+}
+
+.board_title {
+    font-size: larger;
+    font-weight: bold;
+    text-align: left;
+}
+
+.the_num_of_post {
+    font-size: large;
+    font-weight: bold;
+    text-align: left;
+}
+
+.logout {
+    position: absolute;
+    left: 90%;
+    top: 5%;
+    transform: translate(-50%, -50%);
+}
+
+.search_box {
+    position: absolute;
+    left: 80%;
+    top: 15%;
+    transform: translate(-50%, -50%);
+}
+
+.title_panel, .body_panel {
+    width: 100%;
+}
+
 form {
     display: inline;
 }
@@ -8,10 +69,6 @@ form {
 
     color: pink;
     background: white;
-}
-
-.bodyBox {
-    width: 100%;
 }
 
 table.table {

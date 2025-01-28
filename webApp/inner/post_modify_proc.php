@@ -10,27 +10,21 @@
 
     $user = $_SESSION['user_id'];
     $title = $_POST["title"];
-    $content = $_POST["content"];
-    $board_id = $_POST["board_id"];
+    $substance = $_POST["substance"];
+    $post_id = $_POST["post_id"];
     date_default_timezone_set('Asia/Seoul');
     $modified_date = new DateTime("now");
+    $modified_date = $modified_date->format('Y-m-d H:i:s');
 
-    if (empty($title) or empty($content)) {
-        echo "<script>alert('제목과 내용을 다 채우고 등록 버튼을 눌러주시기 바랍니다')</script>";
-        echo "<script>location.replace('../post_modify.php?board_id={$board_id}');</script>";
-        exit;
-    } else {
-        $update_sql = "UPDATE board SET title = '{$title}', content = '{$content}', write_date = '{$modified_date -> format('Y-m-d')}' WHERE board_id = '{$board_id}'";
-        $result = mysqli_query($conn, $update_sql);
+    $update_sql = "UPDATE `board` SET `title`=?,`substance`=?,`created_date`=? WHERE post_id = ?";
+    $stmt = $conn->prepare($update_sql);
+    $stmt->bind_param('ssss', $title, $substance, $modified_date, $post_id);
+    $stmt->execute();
 
-        if ($result) {
-            echo "<script>alert('수정되었습니다');</script>";
-            echo "<script>location.replace('../index.php');</script>";
-        } else {
-            echo "<script>alert('오류가 발생했습니다');</script>";
-            echo "<script>location.replace('../post_modify.php');</script>";
-        }
-    }
+    echo "<script>
+    alert('수정되었습니다');
+    location.replace('../index.php');
+    </script>";
 
-    mysqli_close($conn);
+    $stmt->close();
 ?>

@@ -15,8 +15,8 @@ $select_sql = "SELECT * FROM member WHERE id = ?";
 $stmt = $conn->prepare($select_sql);
 $stmt->bind_param('s', $id);
 $stmt->execute();
-
-$cnt = $stmt -> num_rows();
+$ret = $stmt->get_result();
+$cnt = $ret->num_rows;
 if ($cnt == 1) {
     echo "<script>
     alert('이미 존재하는 아이디입니다!');
@@ -33,7 +33,7 @@ if ($cnt == 1) {
     
     echo "<script>
     alert('회원가입되셨습니다!');
-    history.back();
+    location.href = '../sign_in.php';
     </script>";
     exit;
 }

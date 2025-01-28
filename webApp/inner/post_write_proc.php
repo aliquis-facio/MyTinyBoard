@@ -14,7 +14,7 @@
     $created_date = new DateTime("now");
     $created_date = $created_date->format('Y-m-d H:i:s');
     $title = $_POST["title"];
-    $post_id = hash('sha256', $title);
+    $post_id = hash('sha256', $title . $writer . $created_date);
     $substance = $_POST["substance"];
     $post_view = 0;
 
@@ -23,19 +23,9 @@
     $stmt = $conn->prepare($insert_sql);
     $stmt->bind_param('sssssi', $post_id, $writer, $title, $substance, $created_date, $post_view);
     $stmt->execute();
-    $cnt = $stmt->num_rows();
-    echo $cnt;
-
-    if ($cnt) {
-        echo "<script>alert('등록되었습니다');</script>";
-        // echo "<script>location.replace('../index.php');</script>";
-    } else {
-        echo "<script>
-        alert('오류가 발생했습니다');
-        // history.back();
-        </script>";
-        // echo "<script>location.replace('../post_write.php');</script>";
-    }
+    
+    echo "<script>alert('등록되었습니다');</script>";
+    echo "<script>location.replace('../index.php');</script>";
 
     $stmt->close();
 ?>

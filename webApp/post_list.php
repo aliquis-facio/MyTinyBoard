@@ -16,9 +16,13 @@
 
     $user_id = $_SESSION['user_id'];
     $writer = $_GET['writer'];
-    $select_sql = "SELECT * FROM board WHERE writer = '{$writer}'";
-    $ret = mysqli_query($conn, $select_sql);
-    $cnt = mysqli_num_rows($ret);
+
+    $select_sql = "SELECT * FROM board WHERE writer = ?";
+    $stmt = $conn->prepare($select_sql);
+    $stmt->bind_param('s', $writer);
+    $stmt->execute();
+    $ret = $stmt->get_result();
+    $cnt = $ret->num_rows;
 ?>
 
 <body>
@@ -28,8 +32,8 @@
 
     <div class = "headBox">
         <?php
-            echo "<h1>{$writer}님의글보기</h1>";
-            echo "<h4> {$cnt}개의 글</h4>";
+            echo "<h1>{$writer}님의글보기</h1>
+            <h4> {$cnt}개의 글</h4>";
             if ($user_id != $writer) echo "<a href=\"./post_list.php?writer={$user_id}\">내 게시글</a>";
         ?>
         <a href="./post_write.php">글쓰기</a>
@@ -60,35 +64,29 @@
                 </td>
             </tr>
         </tfoot>
-
+        <tbody>
             <?php
                 $num = 1;
 
                 if ($ret) {
-                    echo "<tbody>";
                     while($row = mysqli_fetch_array($ret)) {
-                        echo "<tr>";
-                        echo "<td>{$num}</td>";
-                        echo "<td>";
-                        echo "<a href=\"./post_view.php?board_id={$row['board_id']}\">{$row['title']}</a>";
-                        echo "</td>";
-                        echo "<td>";
-                        echo "<a href=\"./post_list.php?writer={$row['writer']}\">{$row['writer']}</a>";
-                        echo "</td>";
-                        echo "<td>{$row['write_date']}</td>";
-                        echo "<td>{$row['view']}</td>";
-                        echo "</tr>";
+                        echo "<tr>
+                        <td>{$num}</td>
+                        <td><a href=\"./post_view.php?post_id={$row['post_id']}\">{$row['title']}</a></td>
+                        <td><a href=\"./post_list.php?writer={$row['writer']}\">{$row['writer']}</a></td>
+                        <td>{$row['created_date']}</td>
+                        <td>{$row['post_view']}</td>
+                        </tr>";
                         $num += 1;
                     }
-                    echo "</table>";
                 } else {
                     echo "오류 발생했다.<br>";
                 }
-
-                mysqli_close($conn);
+                
+                $stmt->close();
             ?>
-        </div>
-    </div>
+        </tbody>
+    </table>
 </body>
 
 </html>

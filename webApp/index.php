@@ -25,6 +25,7 @@
         
         <div class="side_box">
             <?php
+                // Get user written post data
                 $select_sql = "SELECT * FROM `board` WHERE writer='{$user_id}'";
                 $stmt->prepare($select_sql);
                 $stmt->execute();
@@ -32,6 +33,7 @@
                 $cnt_post = $ret->num_rows;
                 $stmt->reset();
                 
+                // Get user written coment data
                 $select_sql = "SELECT * FROM `coment` WHERE writer='{$user_id}'";
                 $stmt->prepare($select_sql);
                 $stmt->execute();
@@ -58,6 +60,7 @@
     
                 <p class="board_title">자유게시판</p>
                 <?php
+                    // Get all post
                     $select_sql = "SELECT * FROM `board` ORDER BY created_date DESC";
                     $stmt->prepare($select_sql);
                     $stmt->execute();

@@ -9,7 +9,6 @@
 </head>
 
 <?php
-    include_once("./inner/error_report.php");
     include_once("./inner/user_session.php");
     include_once("./inner/sql_connect.php");
 ?>
@@ -52,6 +51,7 @@
 
         <div class="foot_box">
             <p><a href="./update_my_information.php">개인정보 변경</a></p>
+            <p><a href="./delete_account.php">회원탈퇴</a></p>
         </div>
     </div>
 </body>

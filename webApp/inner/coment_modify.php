@@ -1,29 +1,21 @@
 <?php
-    include_once("./error_report.php");
     include_once("./sql_connect.php");
     include_once("./user_session.php");
 ?>
 
 <?php
 // Get parameter
-$writer = $_SESSION['user_id'];
 date_default_timezone_set('Asia/Seoul');
 $created_date = new DateTime("now");
 $created_date = $created_date -> format('Y-m-d H:i:s');
 $reply = $_POST["reply"];
+$coment_id = $_POST["coment_id"];
 $post_id = $_POST["post_id"];
-$coment_id = hash('sha256', $writer.$created_date);
 
-echo "writer: " . $writer . "<br>";
-echo "reply: " . $reply . "<br>";
-echo "date: " . $created_date . "<br>";
-echo "post id: " . $post_id . "<br>";
-echo "coment id: " . $coment_id . "<br>";
-
-// Insert reply data to DB using prepare statement
-$update_sql = "UPDATE `coment` SET `reply`=?, `created_date`=? WHERE coment_id = ?";
+// Update reply data to DB using prepare statement
+$update_sql = "UPDATE `coment` SET `reply`=?, `created_date`=? WHERE `coment_id` = ?";
 $stmt = $conn->prepare($update_sql);
-$stmt->bind_param('sssss', $reply, $created_date, $coment_id);
+$stmt->bind_param('sss', $reply, $created_date, $coment_id);
 $stat = $stmt->execute();
 
 if ($stat) {

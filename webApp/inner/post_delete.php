@@ -1,14 +1,9 @@
 <?php
-    include_once("./error_report.php");
     include_once("./user_session.php");
     include_once("./sql_connect.php");
 ?>
 
 <?php
-    // if (!session_id()) {
-    //     session_start();
-    // }
-
     $post_id = $_GET['post_id'];
     
     $delete_sql = "DELETE FROM `board` WHERE post_id=?";

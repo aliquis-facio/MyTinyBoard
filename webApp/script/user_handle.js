@@ -46,6 +46,18 @@ function update_my_inform_submit() {
     }
 }
 
+function delete_account() {
+    let form = document.getElementById("delete_account_form");
+    let input_pw = document.getElementsByTagName('input')[0].value;
+
+    if (input_pw == "") {
+        alert("현재 비밀번호를 입력해주세요");
+    } else {
+        let check = confirm("정말로 탈퇴하시겠습니까?");
+        if (check) form.submit();
+    }
+}
+
 function is_email(string) {
 	var regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
  

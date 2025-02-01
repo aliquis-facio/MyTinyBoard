@@ -22,7 +22,6 @@
     $stmt->bind_param('s', $post_id);
     $stmt->execute();
     $ret = $stmt->get_result();
-    $stmt->reset();
 
     if ($ret) {
         $row = $ret->fetch_assoc();
@@ -36,11 +35,12 @@
         // Update view count
         if ($writer != $user_id) {
             $view += 1;
-            $update_sql = "UPDATE board SET view = ? WHERE post_id = ?";
+
+            $stmt->reset();
+            $update_sql = "UPDATE board SET post_view = ? WHERE post_id = ?";
             $stmt->prepare($update_sql);
             $stmt->bind_param('is', $view, $post_id);
             $stmt->execute();
-            $stmt->reset();
         }
     } else {
         echo "<script>alert('오류가 발생했습니다');</script>";
@@ -88,6 +88,7 @@
                 <!-- 댓글 목록 -->
                 <ul>
                     <?php
+                        $stmt->reset();
                         $select_sql = "SELECT * FROM `coment` WHERE post_id=? ORDER BY created_date ASC";
                         $stmt->prepare($select_sql);
                         $stmt->bind_param('s', $post_id);
@@ -99,8 +100,9 @@
                                 $coment_writer = $row['writer'];
                                 $coment = $row['reply'];
                                 $coment_created_date = str_replace("-", ".", substr($row['created_date'], 0, 16));
+                                $coment_id = $row['coment_id'];
 
-                                echo "<li>
+                                echo "<div id='$coment_id'>
                                 <p class='thin_font coment'>{$coment}</p>
                                 <span class='strong_font coment'>{$coment_writer}님</span>
                                 <span class='grey small_font coment'>{$coment_created_date}</span>
@@ -108,11 +110,11 @@
                                 
                                 if ($coment_writer == $user_id) {
                                     echo "
-                                    <button class='orange'>수정</button>
-                                    <button class='red'>삭제</button>
+                                    <button class='orange' onclick='coment_modify(\"$coment_id\", \"$post_id\")'>수정</button>
+                                    <button class='red' onclick='coment_delete(\"$coment_id\", \"$post_id\")'>삭제</button>
                                     ";
                                 }
-                                echo "</li>
+                                echo "</div>
                                 <hr>";
                             }
                         } else {

@@ -74,6 +74,18 @@ function coment_write_submit() {
     }
 }
 
+function coment_modify(coment_id, post_id) {
+    let div = document.getElementById(coment_id);
+    let coment = div.firstElementChild.textContent;
+    
+    div.innerHTML = "<form id=\"coment_form\" action=\"./inner/coment_modify.php\" method=\"post\">\n"+
+                        "<input id=\"reply_input\" type=\"text\" name=\"reply\" value=\""+coment+"\">\n"+
+                        "<input type=\"hidden\" name=\"coment_id\" value=\""+coment_id+"\">\n"+
+                        "<input type=\"hidden\" name=\"post_id\" value=\""+post_id+"\">\n"+
+                        "<button class=\"orange\" type=\"button\" onclick=\"coment_modify_submit()\">수정</button>\n"+
+                    "</form>";
+}
+
 function coment_modify_submit() {
     let form = document.getElementById("coment_form");
     let input = document.getElementById("reply_input");
@@ -92,7 +104,7 @@ function coment_modify_submit() {
     }
 }
 
-function coment_delete(coment_id) {
+function coment_delete(coment_id, post_id) {
     let check = confirm("정말로 댓글을 지우시겠습니까?");
-    if (check) location.href='./inner/coment_delete.php?coment_id='+coment_id;
+    if (check) location.href='./inner/coment_delete.php?coment_id='+coment_id+'&post_id='+post_id;
 }

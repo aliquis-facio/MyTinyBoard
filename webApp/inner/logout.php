@@ -6,6 +6,6 @@
 ?>
 
 <script>
-    alert("You've been logged out");
+    alert("로그아웃되셨습니다");
     location.replace('../index.php');
 </script>

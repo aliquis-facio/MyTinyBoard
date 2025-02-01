@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>MY PAGE</title>
+    <title>UPDATE MY INFO</title>
     <meta content="text/html; charset=utf-8">
     <link rel="stylesheet" href="./style/main.css">
     <script src="./script/user_handle.js"></script>

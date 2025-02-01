@@ -39,7 +39,8 @@
                 $cnt_coment = $ret->num_rows;
 
                 echo "<p><b>{$user_id}님</b></p>
-                <a href=\"./post_list.php?writer={$user_id}\">내 게시글</a>
+                <p><a href=\"./mypage.php\">내 정보</a></p>
+                <p><a href=\"./post_list.php?writer={$user_id}\">내 게시글</a></p>
                 <p>내가 쓴 게시글: {$cnt_post}개</p>
                 <p>내가 쓴 댓글: {$cnt_coment}개</p>";
             ?>

@@ -32,6 +32,20 @@ function sign_up_submit() {
     if (check) form.submit();
 }
 
+function update_my_inform_submit() {
+    let form = document.getElementById("update_form");
+    let pw = document.getElementById("pw_input").value;
+    let new_pw = document.getElementById("new_pw_input").value;
+    let new_pw_confirm = document.getElementById("new_pw_confirm_input").value;
+
+    if (pw == "") {
+        alert("현재 비밀번호를 입력해주세요");
+    } else {
+        if (new_pw == new_pw_confirm) form.submit();
+        else alert("입력하신 비밀번호가 일치하지 않습니다");
+    }
+}
+
 function is_email(string) {
 	var regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
  

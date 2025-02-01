@@ -17,6 +17,8 @@ $stmt->bind_param('s', $id);
 $stmt->execute();
 $ret = $stmt->get_result();
 $cnt = $ret->num_rows;
+$stmt->reset();
+
 if ($cnt == 1) {
     echo "<script>
     alert('이미 존재하는 아이디입니다!');
@@ -25,18 +27,24 @@ if ($cnt == 1) {
     exit;
 } else {
     // new register
-    $stmt->reset();
-    $insert_sql = "INSERT INTO member VALUES (?, ?, ?, ?, ?, ?)";
+    $insert_sql = "INSERT INTO `member` VALUES (?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($insert_sql);
     $stmt->bind_param('ssssss', $id, $pw, $name, $birth, $number, $email);
     $stmt->execute();
+    $error_code = $stmt->errno;
+    $stmt->close();
     
-    echo "<script>
-    alert('회원가입되셨습니다!');
-    location.href = '../sign_in.php';
-    </script>";
-    exit;
+    if ($error_code == 0) {
+        echo "<script>
+        alert('회원가입되셨습니다!');
+        location.href = '../sign_in.php';
+        </script>";
+        exit;
+    } else {
+        echo "<script>
+        alert('잘못 입력하셨습니다!');
+        history.back();
+        </script>";
+    }
 }
-
-$stmt->close();
 ?>

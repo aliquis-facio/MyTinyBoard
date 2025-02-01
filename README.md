@@ -1,36 +1,11 @@
-작성 전
-mypage.php
+CRUD
+1. User Personal Data
+    [x] C
+    [x] R
+    [x] U
+    [] D
+2. Post
+3. Coment
 
-수정 전
-find_id.php
-find_pw.php
-post_view.php
-
-coment_write.php
-find_id_proc.php
-find_pw_proc.php
-logout.php
-post_count.php
-post_delete.php
-sql_create.php
-
-수정 중
-post_list.php
-index.php
-
-수정 완
-index.html
-sign_in.php
-sign_up.php
-post_write.php
-post_modify.php
-
-error_report.php
-signin_proc.php
-signup_proc.php
-sql_connect.php
-user_session.php
-post_write_proc.php
-post_modify_proc.php
-
-네이버 카페 기능 구현하기!
+onclick event 적용된 부분은 enter키 눌러도 submit이 안 됨
+* [[javascript] 로그인 시 엔터키 적용](https://velog.io/@ssppm19/javascript-%EB%A1%9C%EA%B7%B8%EC%9D%B8-%EC%8B%9C-%EC%97%94%ED%84%B0%ED%82%A4-%EC%A0%81%EC%9A%A9)

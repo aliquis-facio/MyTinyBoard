@@ -5,7 +5,7 @@
     <title>POST LIST</title>
     <meta content="text/html; charset=utf-8">
     <link rel="stylesheet" href="./style/main.css">
-    <link rel="stylesheet" href="./style/list.css">
+    <link rel="stylesheet" href="./style/index.css">
     <script></script>
 </head>
 
@@ -13,16 +13,6 @@
     include_once("./inner/error_report.php");
     include_once("./inner/user_session.php");
     include_once("./inner/sql_connect.php");
-
-    $user_id = $_SESSION['user_id'];
-    $writer = $_GET['writer'];
-
-    $select_sql = "SELECT * FROM board WHERE writer = ?";
-    $stmt = $conn->prepare($select_sql);
-    $stmt->bind_param('s', $writer);
-    $stmt->execute();
-    $ret = $stmt->get_result();
-    $cnt = $ret->num_rows;
 ?>
 
 <body>
@@ -32,8 +22,10 @@
 
     <div class = "headBox">
         <?php
-            echo "<h1>{$writer}님의글보기</h1>
-            <h4> {$cnt}개의 글</h4>";
+            $user_id = $_SESSION['user_id'];
+            $writer = $_GET['writer'];
+            
+            echo "<h1>{$writer}님의글보기</h1>";
             if ($user_id != $writer) echo "<a href=\"./post_list.php?writer={$user_id}\">내 게시글</a>";
         ?>
         <a href="./post_write.php">글쓰기</a>
@@ -68,13 +60,23 @@
             <?php
                 $num = 1;
 
+                // Get all post
+                $select_sql = "SELECT * FROM `board` WHERE writer = ? ORDER BY created_date DESC";
+                $stmt->prepare($select_sql);
+                $stmt->bind_param('s', $writer);
+                $stmt->execute();
+                $ret = $stmt->get_result();
+                $cnt = $ret->num_rows;
+                echo "<p class='the_num_of_post'>{$cnt}개의 글</p>";
+
                 if ($ret) {
                     while($row = mysqli_fetch_array($ret)) {
+                        $created_date = str_replace("-", ".", substr($row['created_date'], 0, 16));
                         echo "<tr>
                         <td>{$num}</td>
                         <td><a href=\"./post_view.php?post_id={$row['post_id']}\">{$row['title']}</a></td>
                         <td><a href=\"./post_list.php?writer={$row['writer']}\">{$row['writer']}</a></td>
-                        <td>{$row['created_date']}</td>
+                        <td>{$created_date}</td>
                         <td>{$row['post_view']}</td>
                         </tr>";
                         $num += 1;

@@ -1,5 +1,4 @@
 <?php
-    include_once("./error_report.php");
     include_once("./sql_connect.php");
 ?>
 

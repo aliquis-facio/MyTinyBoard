@@ -12,6 +12,7 @@
 <?php
     include_once("./inner/user_session.php");
     include_once("./inner/sql_connect.php");
+    include_once("./inner/error_report.php");
 ?>
 
 <body>
@@ -52,21 +53,35 @@
         <div class="body_box">
             <div class = "title_panel">
                 <div>
-                    <form id="post_search" class="search_box" action="./inner/post_search.php">
-                        <input type="text" name="search_string">
+                    <form id="post_search" class="search_box" action="">
+                        <input type="text" name="search" value="">
                         <button class="green" type="submit">검색</button>
                     </form>
                 </div>
     
                 <p class="board_title">자유게시판</p>
                 <?php
-                    // Get all post
-                    $select_sql = "SELECT * FROM `board` ORDER BY created_date DESC";
-                    $stmt->prepare($select_sql);
-                    $stmt->execute();
-                    $ret = $stmt->get_result();
-                    $cnt = $ret->num_rows;
-                    echo "<p class='the_num_of_post'>{$cnt}개의 글</p>";
+                    $search_string = isset($_GET['search']) ? $_GET['search']:"";
+                    
+                    if ($search_string == "") {
+                        // Get all post
+                        $select_sql = "SELECT * FROM `board` ORDER BY created_date DESC";
+                        $stmt->prepare($select_sql);
+                        $stmt->execute();
+                        $ret = $stmt->get_result();
+                        $num_of_total_post = $ret->num_rows;
+                        echo "<p class='the_num_of_post'>{$num_of_total_post}개의 글</p>";
+                    } else {
+                        // Get post
+                        $search_string = "%{$search_string}%";
+                        $select_sql = "SELECT * FROM `board` WHERE `title` LIKE ? ORDER BY created_date DESC";
+                        $stmt->prepare($select_sql);
+                        $stmt->bind_param('s', $search_string);
+                        $stmt->execute();
+                        $ret = $stmt->get_result();
+                        $num_of_total_post = $ret->num_rows;
+                        echo "<p class='the_num_of_post'>{$num_of_total_post}개의 글</p>";
+                    }
                 ?>
             </div>
         
@@ -83,27 +98,16 @@
                             <th>조회수</th>
                         </tr>
                     </thead>
-                    <tfoot>
-                        <tr>
-                            <td colspan="5">
-                                <div class="links">
-                                    <a href="#">&laquo;</a>
-                                    <a href="#">&lt;</a>
-                                    <a class="active" href="#">1</a>
-                                    <a href="#">2</a>
-                                    <a href="#">3</a>
-                                    <a href="#">4</a> 
-                                    <a href="#">5</a> 
-                                    <a href="#">&gt;</a>
-                                    <a href="#">&raquo;</a>
-                                </div>
-                            </td>
-                        </tr>
-                    </tfoot>
                     <tbody>
                         <?php
                             $num = 1;
-        
+                            $page_size = 15;
+                            $page_is_empty = false;
+                            $page_total_post = 0;
+                            $page_num = 0;
+                            $page_has_prev = false;
+                            $page_has_next = false;
+
                             if ($ret) {
                                 while($row = $ret->fetch_assoc()) {
                                     $created_date = str_replace("-", ".", substr($row['created_date'], 0, 16));
@@ -124,6 +128,25 @@
                             $stmt->close();
                         ?>
                     </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="5">
+                                <div class="links">
+                                    <?php
+                                        echo "<a href=\"#\">&laquo;</a>
+                                        <a href=\"#\">&lt;</a>
+                                        <a class=\"active\" href=\"#\">1</a>
+                                        <a href=\"#\">2</a>
+                                        <a href=\"#\">3</a>
+                                        <a href=\"#\">4</a> 
+                                        <a href=\"#\">5</a> 
+                                        <a href=\"#\">&gt;</a>
+                                        <a href=\"#\">&raquo;</a>";
+                                    ?>
+                                </div>
+                            </td>
+                        </tr>
+                    </tfoot>
                 </table>
             </div>
         </div>
